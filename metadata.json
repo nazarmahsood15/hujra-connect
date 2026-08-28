@@ -1,0 +1,6 @@
+{
+  "name": "Hujra Connect",
+  "description": "Trusted community service marketplace with Elder Vouch trust chains, voice-first Urdu/Pashto interface, escrow protection, and overseas diaspora care.",
+  "requestFramePermissions": ["microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

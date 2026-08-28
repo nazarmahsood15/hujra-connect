@@ -12,72 +12,407 @@ enum Role {
   WORKER
   ELDER
   ADMIN
+  DIASPORA_CUSTOMER
 }
 
 enum BookingStatus {
   REQUESTED
+  OFFERED
   ACCEPTED
-  EN_ROUTE
   IN_PROGRESS
+  WORK_SUBMITTED
+  CUSTOMER_REVIEW
   COMPLETED
   CANCELLED
+  DISPUTED
+}
+
+enum BookingType {
+  INSTANT
+  SCHEDULED
+  EMERGENCY
+  RECURRING
+  MONTHLY
 }
 
 enum VouchRole {
   ELDER
   IMAM
   SENIOR_WORKER
+  UNION_COUNCIL_OFFICIAL
+  COMMUNITY_LEADER
+}
+
+enum VouchStatus {
+  PENDING
+  VERIFIED
+  FLAGGED
+  REVOKED
+}
+
+enum EscrowStatus {
+  PENDING_DEPOSIT
+  FUNDS_HELD
+  RELEASED
+  REFUNDED
+  DISPUTE_LOCKED
+}
+
+enum PaymentMethod {
+  JAZZCASH
+  EASYPAISA
+  BANK_TRANSFER
+  STRIPE_CARD
+  CASH_ESCROW_AGENT
+}
+
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED_WORKER_PAID
+  RESOLVED_CUSTOMER_REFUNDED
+  RESOLVED_PARTIAL_SPLIT
+  CANCELLED
+}
+
+enum UrgencyLevel {
+  EMERGENCY
+  STANDARD
+  FLEXIBLE
 }
 
 model User {
-  id        String   @id @default(cuid())
-  phone     String   @unique
-  email     String?  @unique
-  name      String
-  role      Role     @default(CUSTOMER)
-  cnicVerified  Boolean @default(false)
-  faceVerified  Boolean @default(false)
-  createdAt DateTime @default(now())
+  id              String           @id @default(cuid())
+  phone           String           @unique
+  email           String?          @unique
+  name            String
+  role            Role             @default(CUSTOMER)
+  avatar          String?
+  cnicVerified    Boolean          @default(false)
+  cnicNumber      String?
+  faceVerified    Boolean          @default(false)
+  city            String?
+  district        String?
+  unionCouncil    String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 
-  workerProfile WorkerProfile?
-  bookingsMade  Booking[] @relation("CustomerBookings")
-  vouchesGiven  Vouch[]   @relation("VoucherUser")
+  workerProfile   WorkerProfile?
+  customerProfile CustomerProfile?
+  bookingsMade    Booking[]        @relation("CustomerBookings")
+  vouchesGiven    Vouch[]          @relation("VoucherUser")
+  jobsPosted      Job[]            @relation("CustomerJobs")
+  jobOffers       JobOffer[]       @relation("WorkerOffers")
+  sentMessages    Message[]        @relation("SentMessages")
+  reviewsGiven    Review[]         @relation("CustomerReviews")
+  disputesFiled   Dispute[]        @relation("DisputeFiler")
+  notifications   Notification[]
+  wallet          Wallet?
+  favorites       Favorite[]
+  auditLogs       AuditLog[]
+}
+
+model CustomerProfile {
+  id              String   @id @default(cuid())
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String   @unique
+  isDiaspora      Boolean  @default(false)
+  countryOfResidence String?
+  familyAddress   String?
+  familyPhone     String?
+  createdAt       DateTime @default(now())
 }
 
 model WorkerProfile {
-  id            String   @id @default(cuid())
-  user          User     @relation(fields: [userId], references: [id])
-  userId        String   @unique
-  category      String
-  city          String
-  area          String
-  hourlyRate    Int
-  bio           String
-  rating        Float    @default(0)
-  trustScore    Int      @default(0)
-  jobsCompleted Int      @default(0)
+  id              String          @id @default(cuid())
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String          @unique
+  category        String
+  categoryId      String?
+  city            String
+  district        String
+  tehsil          String?
+  unionCouncil    String?
+  mohalla         String?
+  hourlyRate      Int
+  fixedPriceLabel String?
+  bio             String
+  experienceYears Int             @default(3)
+  rating          Float           @default(5.0)
+  trustScore      Int             @default(90)
+  jobsCompleted   Int             @default(0)
+  responseRate    Int             @default(95) // percentage
+  responseTimeMin Int             @default(15) // minutes
+  languages       String[]        @default(["Urdu", "Pashto"])
+  isAvailable     Boolean         @default(true)
+  isVerified      Boolean         @default(true)
+  emergencyService Boolean        @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 
-  vouches  Vouch[]
-  bookings Booking[] @relation("WorkerBookings")
+  vouches         Vouch[]
+  bookings        Booking[]       @relation("WorkerBookings")
+  portfolio       PortfolioItem[]
+  certificates    Certificate[]
+  reviewsReceived Review[]        @relation("WorkerReviews")
+  serviceCategory ServiceCategory? @relation(fields: [categoryId], references: [id])
 }
 
 model Vouch {
-  id         String        @id @default(cuid())
-  worker     WorkerProfile @relation(fields: [workerId], references: [id])
-  workerId   String
-  voucher    User          @relation("VoucherUser", fields: [voucherId], references: [id])
-  voucherId  String
-  role       VouchRole
-  createdAt  DateTime      @default(now())
+  id              String        @id @default(cuid())
+  worker          WorkerProfile @relation(fields: [workerId], references: [id], onDelete: Cascade)
+  workerId        String
+  voucher         User          @relation("VoucherUser", fields: [voucherId], references: [id])
+  voucherId       String
+  role            VouchRole
+  voucherTitle    String        // e.g. "Elder of Hayatabad Phase 1", "Khateeb Jamia Masjid"
+  relationship    String        // e.g. "Neighbour for 15 years", "Known family since 2008"
+  status          VouchStatus   @default(VERIFIED)
+  reputationWeight Int          @default(95)
+  notes           String?
+  riskFlag        Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+}
+
+model ServiceCategory {
+  id          String          @id @default(cuid())
+  name        String          @unique
+  slug        String          @unique
+  icon        String
+  description String?
+  basePrice   Int?
+  workers     WorkerProfile[]
+  jobs        Job[]
+}
+
+model Job {
+  id              String        @id @default(cuid())
+  customer        User          @relation("CustomerJobs", fields: [customerId], references: [id])
+  customerId      String
+  title           String
+  description     String
+  voiceNoteUrl    String?
+  category        String
+  categoryId      String?
+  categoryRef     ServiceCategory? @relation(fields: [categoryId], references: [id])
+  budget          Int
+  city            String
+  district        String
+  unionCouncil    String?
+  urgency         UrgencyLevel  @default(STANDARD)
+  deadline        DateTime?
+  status          String        @default("OPEN") // OPEN, ASSIGNED, COMPLETED, CANCELLED
+  isDiaspora      Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  offers          JobOffer[]
+  booking         Booking?
+}
+
+model JobOffer {
+  id              String        @id @default(cuid())
+  job             Job           @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  jobId           String
+  workerUser      User          @relation("WorkerOffers", fields: [workerUserId], references: [id])
+  workerUserId    String
+  price           Int
+  estimatedTime   String
+  message         String
+  voiceProposalUrl String?
+  status          String        @default("PENDING") // PENDING, ACCEPTED, REJECTED
+  createdAt       DateTime      @default(now())
 }
 
 model Booking {
-  id         String        @id @default(cuid())
-  customer   User          @relation("CustomerBookings", fields: [customerId], references: [id])
-  customerId String
-  worker     WorkerProfile @relation("WorkerBookings", fields: [workerId], references: [id])
-  workerId   String
-  status     BookingStatus @default(REQUESTED)
-  budget     Int?
-  createdAt  DateTime      @default(now())
+  id              String         @id @default(cuid())
+  customer        User           @relation("CustomerBookings", fields: [customerId], references: [id])
+  customerId      String
+  worker          WorkerProfile  @relation("WorkerBookings", fields: [workerId], references: [id])
+  workerId        String
+  job             Job?           @relation(fields: [jobId], references: [id])
+  jobId           String?        @unique
+  status          BookingStatus  @default(REQUESTED)
+  type            BookingType    @default(SCHEDULED)
+  scheduledDate   DateTime?
+  serviceName     String
+  amount          Int
+  city            String
+  address         String
+  notes           String?
+  isDiaspora      Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  escrow          EscrowTransaction?
+  workProof       WorkProof?
+  review          Review?
+  dispute         Dispute?
+}
+
+model EscrowTransaction {
+  id              String         @id @default(cuid())
+  booking         Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  bookingId       String         @unique
+  amount          Int
+  currency        String         @default("PKR")
+  paymentMethod   PaymentMethod  @default(JAZZCASH)
+  paymentRef      String?
+  status          EscrowStatus   @default(FUNDS_HELD)
+  heldAt          DateTime       @default(now())
+  releasedAt      DateTime?
+  refundedAt      DateTime?
+  adminNotes      String?
+}
+
+model WorkProof {
+  id              String         @id @default(cuid())
+  booking         Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  bookingId       String         @unique
+  beforePhotos    String[]
+  afterPhotos     String[]
+  completionNotes String?
+  gpsCheckInLat   Float?
+  gpsCheckInLng   Float?
+  submittedAt     DateTime       @default(now())
+  isApproved      Boolean        @default(false)
+}
+
+model Review {
+  id              String         @id @default(cuid())
+  booking         Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  bookingId       String         @unique
+  customer        User           @relation("CustomerReviews", fields: [customerId], references: [id])
+  customerId      String
+  worker          WorkerProfile  @relation("WorkerReviews", fields: [workerId], references: [id])
+  workerId        String
+  rating          Int            // 1 to 5
+  comment         String
+  voiceReviewUrl  String?
+  photoUrls       String[]
+  createdAt       DateTime       @default(now())
+}
+
+model Dispute {
+  id              String         @id @default(cuid())
+  booking         Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  bookingId       String         @unique
+  filedBy         User           @relation("DisputeFiler", fields: [filedById], references: [id])
+  filedById       String
+  reason          String
+  description     String
+  status          DisputeStatus  @default(OPEN)
+  resolutionNotes String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  evidences       DisputeEvidence[]
+}
+
+model DisputeEvidence {
+  id              String         @id @default(cuid())
+  dispute         Dispute        @relation(fields: [disputeId], references: [id], onDelete: Cascade)
+  disputeId       String
+  fileUrl         String
+  fileType        String         // "IMAGE", "VIDEO", "AUDIO", "DOCUMENT"
+  note            String?
+  uploadedAt      DateTime       @default(now())
+}
+
+model Conversation {
+  id              String         @id @default(cuid())
+  participantIds  String[]
+  lastMessageText String?
+  updatedAt       DateTime       @updatedAt
+  messages        Message[]
+}
+
+model Message {
+  id              String         @id @default(cuid())
+  conversation    Conversation   @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversationId  String
+  sender          User           @relation("SentMessages", fields: [senderId], references: [id])
+  senderId        String
+  text            String?
+  audioUrl        String?
+  imageUrl        String?
+  isRead          Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+}
+
+model Notification {
+  id              String         @id @default(cuid())
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String
+  title           String
+  message         String
+  type            String         // "BOOKING", "OFFER", "PAYMENT", "VOUCH", "DISPUTE"
+  link            String?
+  isRead          Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+}
+
+model Wallet {
+  id              String         @id @default(cuid())
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String         @unique
+  balance         Int            @default(0)
+  pendingBalance  Int            @default(0)
+  withdrawals     Withdrawal[]
+  createdAt       DateTime       @default(now())
+}
+
+model Withdrawal {
+  id              String         @id @default(cuid())
+  wallet          Wallet         @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  walletId        String
+  amount          Int
+  accountType     PaymentMethod
+  accountNumber   String
+  accountName     String
+  status          String         @default("PENDING") // PENDING, PROCESSED, REJECTED
+  createdAt       DateTime       @default(now())
+}
+
+model PortfolioItem {
+  id              String         @id @default(cuid())
+  worker          WorkerProfile  @relation(fields: [workerId], references: [id], onDelete: Cascade)
+  workerId        String
+  title           String
+  description     String?
+  beforePhoto     String?
+  afterPhoto      String
+  category        String?
+  completedAt     DateTime       @default(now())
+}
+
+model Certificate {
+  id              String         @id @default(cuid())
+  worker          WorkerProfile  @relation(fields: [workerId], references: [id], onDelete: Cascade)
+  workerId        String
+  title           String
+  issuedBy        String
+  issueYear       Int
+  documentUrl     String?
+}
+
+model Favorite {
+  id              String         @id @default(cuid())
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String
+  workerId        String
+  createdAt       DateTime       @default(now())
+
+  @@unique([userId, workerId])
+}
+
+model AuditLog {
+  id              String         @id @default(cuid())
+  actor           User?          @relation(fields: [actorId], references: [id])
+  actorId         String?
+  action          String
+  targetType      String
+  targetId        String
+  details         String?
+  createdAt       DateTime       @default(now())
 }

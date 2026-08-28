@@ -11,18 +11,19 @@
     "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
+    "@google/genai": "^2.19.0",
+    "@hookform/resolvers": "^3.9.0",
+    "@prisma/client": "^5.20.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.5.0",
+    "lucide-react": "^0.445.0",
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "@prisma/client": "^5.20.0",
-    "zod": "^3.23.8",
     "react-hook-form": "^7.53.0",
-    "@hookform/resolvers": "^3.9.0",
-    "framer-motion": "^11.5.0",
-    "clsx": "^2.1.1",
+    "socket.io-client": "^4.7.5",
     "tailwind-merge": "^2.5.2",
-    "lucide-react": "^0.445.0",
-    "socket.io-client": "^4.7.5"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "typescript": "^5.6.2",
