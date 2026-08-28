@@ -47,7 +47,7 @@ export default function DiasporaPage() {
         <div className="max-w-3xl space-y-6">
           <div className="inline-flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#e8a23d] border border-white/20">
             <Globe2 className="w-4 h-4" />
-            <span>Hujra Connect · Overseas Care Protocol</span>
+            <span>Connecta · Overseas Care Protocol</span>
           </div>
 
           <h1 className="font-display text-4xl sm:text-5xl text-white leading-tight">
@@ -256,7 +256,7 @@ export default function DiasporaPage() {
               country: "Riyadh, Saudi Arabia",
               familyCity: "Swat, Mingora",
               comment:
-                "Hujra Connect is a blessing for overseas Pashtuns. Everything was transparent, no hidden charges, and the funds stayed locked in escrow until my brother tested the water motor.",
+                "Connecta is a blessing for overseas Pashtuns. Everything was transparent, no hidden charges, and the funds stayed locked in escrow until my brother tested the water motor.",
             },
           ].map((t, idx) => (
             <Card key={idx} className="p-6 space-y-3 border border-[#e4d5b8] dark:border-[#2c433d]">

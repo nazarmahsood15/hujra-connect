@@ -334,7 +334,7 @@ export default function WorkerProfilePage({ params }: { params: Promise<{ id: st
             <div className="p-3 bg-[#0f4c4c]/10 dark:bg-[#2c8b84]/15 rounded-xl border border-[#0f4c4c]/20 space-y-1 text-xs">
               <div className="flex items-center gap-1.5 text-[#0f4c4c] dark:text-[#2c8b84] font-bold">
                 <Lock className="w-4 h-4" />
-                <span>Hujra Escrow Guarantee</span>
+                <span>Connecta Escrow Guarantee</span>
               </div>
               <p className="text-[11px] text-[#6b5f4f] dark:text-[#afa491] leading-relaxed">
                 Your payment is locked safely. Worker is only paid after you inspect their work and confirm satisfaction.

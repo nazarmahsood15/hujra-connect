@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ShieldCheck, HeartHandshake, Lock, PhoneCall, HelpCircle, FileText, CheckCircle2 } from "lucide-react";
+import { ConnectaLogo } from "@/components/ConnectaLogo";
 
 export function Footer() {
   return (
@@ -53,13 +54,11 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
         <div className="col-span-2 space-y-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-[#e8a23d] flex items-center justify-center text-[#0f4c4c] font-display text-xl font-bold">
-              ح
-            </div>
-            <span className="font-display text-2xl tracking-tight text-[#f1ead9]">Hujra Connect</span>
+            <ConnectaLogo size="sm" variant="gold" />
+            <span className="font-display text-2xl tracking-tight text-[#f1ead9]">Connecta</span>
           </div>
           <p className="text-xs text-white/80 max-w-sm leading-relaxed">
-            Rebuilding trusted neighbourhood craftsmanship across Khyber Pakhtunkhwa and Pakistan. Rooted in traditional Hujra values, powered by modern escrow and AI-assisted matching.
+            Rebuilding trusted neighbourhood craftsmanship across Khyber Pakhtunkhwa and Pakistan. Rooted in traditional community values, powered by modern escrow and AI-assisted matching.
           </p>
           <div className="pt-2 text-xs text-[#e8a23d]">
             📍 Headquartered in Peshawar · Serving Mardan, Swat, Abbottabad & beyond
@@ -91,7 +90,7 @@ export function Footer() {
         <div>
           <h5 className="font-bold text-xs uppercase tracking-wider text-[#e8a23d] mb-3">Company & Legal</h5>
           <ul className="space-y-2 text-xs text-white/80">
-            <li><Link href="/about" className="hover:text-white transition">About Hujra Connect</Link></li>
+            <li><Link href="/about" className="hover:text-white transition">About Connecta</Link></li>
             <li><Link href="/contact" className="hover:text-white transition">Contact & Helplines</Link></li>
             <li><Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link></li>
             <li><Link href="/terms" className="hover:text-white transition">Terms of Service</Link></li>
@@ -100,7 +99,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10 py-6 px-6 text-center text-xs text-white/60">
-        <p>© {new Date().getFullYear()} Hujra Connect. Made with honor for Pakistani communities.</p>
+        <p>© {new Date().getFullYear()} Connecta. Made with honor for Pakistani communities.</p>
       </div>
     </footer>
   );

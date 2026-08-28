@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Card";
+import { ConnectaLogo } from "@/components/ConnectaLogo";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -43,13 +44,11 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between gap-4">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3 shrink-0 group">
-          <div className="w-10 h-10 rounded-2xl bg-[#0f4c4c] dark:bg-[#17706b] flex items-center justify-center text-[#e8a23d] font-display text-2xl shadow-md group-hover:scale-105 transition-transform">
-            ح
-          </div>
+          <ConnectaLogo size="md" className="group-hover:scale-105" />
           <div>
             <div className="flex items-center gap-1.5">
               <span className="font-display text-2xl tracking-tight text-[#201a14] dark:text-[#f1ead9]">
-                Hujra Connect
+                Connecta
               </span>
               <span className="hidden sm:inline-block text-[10px] bg-[#e8a23d]/20 text-[#c97f1e] dark:text-[#e8a23d] font-bold px-1.5 py-0.5 rounded border border-[#e8a23d]/40">
                 PK

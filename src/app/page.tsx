@@ -73,7 +73,7 @@ export default function LandingPage() {
             </h1>
 
             <p className="text-base sm:text-lg text-[#6b5f4f] dark:text-[#afa491] max-w-xl leading-relaxed">
-              Every electrician, plumber, AC technician, or craftsman on Hujra Connect is verified by a respected community elder before entering your home. With secure escrow protection.
+              Every electrician, plumber, AC technician, or craftsman on Connecta is verified by a respected community elder before entering your home. With secure escrow protection.
             </p>
 
             {/* Smart Search Form with Voice button */}
@@ -236,13 +236,13 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 3. HOW HUJRA CONNECT WORKS (Dual perspective: Customer & Worker) */}
+      {/* 3. HOW CONNECTA WORKS (Dual perspective: Customer & Worker) */}
       <section className="bg-[#efe4cf]/60 dark:bg-[#172a26] py-16 border-y border-[#e4d5b8] dark:border-[#2c433d]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <Badge tone="teal">Rooted in Tradition</Badge>
             <h2 className="font-display text-3xl sm:text-4xl text-[#201a14] dark:text-[#f1ead9]">
-              How Hujra Connect Works
+              How Connecta Works
             </h2>
             <p className="text-sm text-[#6b5f4f] dark:text-[#afa491]">
               Bridging centuries-old Jirga and Hujra trust mechanisms with modern escrow security.

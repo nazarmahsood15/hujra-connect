@@ -9,10 +9,10 @@ const body = Mukta({ weight: ["400", "500", "600", "700"], subsets: ["latin"], v
 const mono = JetBrains_Mono({ weight: ["500", "700"], subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "Hujra Connect — Trusted Local Services & Elder Vouch Network",
+  title: "Connecta — Trusted Local Services & Elder Vouch Network",
   description: "A neighbourhood service marketplace for Pakistan where every worker is vouched for by an elder or imam. Electricians, plumbers, AC technicians, solar specialists, and more.",
   openGraph: {
-    title: "Hujra Connect — Community Vouched Services",
+    title: "Connecta — Community Vouched Services",
     description: "Trusted local workers backed by community elders, imams, and escrow protection across Pakistan.",
     type: "website",
   },

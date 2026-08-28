@@ -53,7 +53,7 @@ export async function parseVoiceJob(transcript: string): Promise<VoiceJobParseRe
   }
 
   try {
-    const prompt = `You are the AI engine for Hujra Connect, a Pakistani local services marketplace.
+    const prompt = `You are the AI engine for Connecta, a Pakistani local services marketplace.
 Analyze the following customer voice transcript (which may be in English, Urdu Roman, Urdu Script, or Pashto):
 "${transcript}"
 
@@ -104,7 +104,7 @@ export async function estimateJobPrice(
       materialsNeeded: ["Standard replacement parts", "Hardware fasteners", "Consumables"],
       tipsForCustomer: [
         "Ask the technician to show genuine purchase receipts for any replaced spare parts.",
-        "Ensure payment remains safely in Hujra Escrow until you test the repair.",
+        "Ensure payment remains safely in Connecta Escrow until you test the repair.",
       ],
     };
   }

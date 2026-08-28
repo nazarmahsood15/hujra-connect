@@ -1,4 +1,4 @@
-# Hujra Connect — Starter
+# Connecta — Starter
 
 Next.js 15 (App Router) + TypeScript + Tailwind CSS starter scaffold, built to match the
 design system from the demo (vouch-chain trust visual, teal/marigold/brass palette).

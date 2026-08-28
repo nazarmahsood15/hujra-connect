@@ -18,13 +18,13 @@ export default function AboutPage() {
 
       <Card className="p-8 sm:p-10 space-y-6 bg-[#fffbf3] dark:bg-[#1c2e2a] border-2 border-[#e4d5b8] dark:border-[#2c433d]">
         <h2 className="font-display text-2xl text-[#201a14] dark:text-[#f1ead9]">
-          Why We Built Hujra Connect
+          Why We Built Connecta
         </h2>
         <p className="text-xs sm:text-sm text-[#201a14]/90 dark:text-[#f1ead9]/90 leading-relaxed">
           Modern online gig apps failed in Pakistan because they replaced trusted personal relationships with anonymous algorithms. Tradesmen were squeezed with exorbitant 20% platform commissions, while families were left vulnerable to unverified strangers entering their homes.
         </p>
         <p className="text-xs sm:text-sm text-[#201a14]/90 dark:text-[#f1ead9]/90 leading-relaxed">
-          <strong>Hujra Connect changes the paradigm.</strong> We integrate genuine cultural accountability: every craftsman is endorsed by an active Union Council Elder or Mosque Imam. We provide 0% commission on worker labor, guaranteed escrow deposits via JazzCash and Easypaisa, and remote care tools for overseas Pakistanis in the diaspora.
+          <strong>Connecta changes the paradigm.</strong> We integrate genuine cultural accountability: every craftsman is endorsed by an active Union Council Elder or Mosque Imam. We provide 0% commission on worker labor, guaranteed escrow deposits via JazzCash and Easypaisa, and remote care tools for overseas Pakistanis in the diaspora.
         </p>
 
         <div className="grid sm:grid-cols-3 gap-4 pt-4 border-t border-[#e4d5b8] dark:border-[#2c433d]">

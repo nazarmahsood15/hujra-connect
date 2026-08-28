@@ -433,7 +433,7 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
           <div className="p-4 rounded-2xl bg-[#efe4cf]/50 dark:bg-[#11201d]/50 border border-[#e4d5b8] dark:border-[#2c433d] text-xs text-[#6b5f4f] dark:text-[#afa491] space-y-2">
             <h4 className="font-bold text-[#201a14] dark:text-[#f1ead9] flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-[#0f4c4c]" />
-              <span>Hujra Escrow Safeguards</span>
+              <span>Connecta Escrow Safeguards</span>
             </h4>
             <p className="text-[11px] leading-relaxed">
               When the customer accepts an offer, the funds are deposited into an escrow vault. The worker is paid immediately once the job is approved.
