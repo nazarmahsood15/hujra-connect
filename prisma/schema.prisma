@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CUSTOMER
+  WORKER
+  ELDER
+  ADMIN
+}
+
+enum BookingStatus {
+  REQUESTED
+  ACCEPTED
+  EN_ROUTE
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum VouchRole {
+  ELDER
+  IMAM
+  SENIOR_WORKER
+}
+
+model User {
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  email     String?  @unique
+  name      String
+  role      Role     @default(CUSTOMER)
+  cnicVerified  Boolean @default(false)
+  faceVerified  Boolean @default(false)
+  createdAt DateTime @default(now())
+
+  workerProfile WorkerProfile?
+  bookingsMade  Booking[] @relation("CustomerBookings")
+  vouchesGiven  Vouch[]   @relation("VoucherUser")
+}
+
+model WorkerProfile {
+  id            String   @id @default(cuid())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String   @unique
+  category      String
+  city          String
+  area          String
+  hourlyRate    Int
+  bio           String
+  rating        Float    @default(0)
+  trustScore    Int      @default(0)
+  jobsCompleted Int      @default(0)
+
+  vouches  Vouch[]
+  bookings Booking[] @relation("WorkerBookings")
+}
+
+model Vouch {
+  id         String        @id @default(cuid())
+  worker     WorkerProfile @relation(fields: [workerId], references: [id])
+  workerId   String
+  voucher    User          @relation("VoucherUser", fields: [voucherId], references: [id])
+  voucherId  String
+  role       VouchRole
+  createdAt  DateTime      @default(now())
+}
+
+model Booking {
+  id         String        @id @default(cuid())
+  customer   User          @relation("CustomerBookings", fields: [customerId], references: [id])
+  customerId String
+  worker     WorkerProfile @relation("WorkerBookings", fields: [workerId], references: [id])
+  workerId   String
+  status     BookingStatus @default(REQUESTED)
+  budget     Int?
+  createdAt  DateTime      @default(now())
+}

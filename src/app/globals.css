@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f6efe2;
+  --bg-soft: #efe4cf;
+  --card: #fffbf3;
+  --ink: #201a14;
+  --ink-soft: #6b5f4f;
+  --teal: #0f4c4c;
+  --teal-2: #17706b;
+  --marigold: #e8a23d;
+  --marigold-2: #c97f1e;
+  --maroon: #a63a2e;
+  --brass: #c9a227;
+  --border: #e4d5b8;
+}
+
+.dark {
+  --bg: #11201d;
+  --bg-soft: #172a26;
+  --card: #1c2e2a;
+  --ink: #f1ead9;
+  --ink-soft: #afa491;
+  --teal: #173e3e;
+  --teal-2: #2c8b84;
+  --marigold: #e8a23d;
+  --marigold-2: #f0b25c;
+  --maroon: #c24e3e;
+  --brass: #d8b33b;
+  --border: #2c433d;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.card-hujra {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-hujra::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--marigold) 0 10px,
+    var(--maroon) 10px 20px,
+    var(--teal-2) 20px 30px
+  );
+  opacity: 0.55;
+}
+
+.vouch-line {
+  height: 2px;
+  flex: 1;
+  background-image: linear-gradient(to right, var(--brass) 55%, transparent 0%);
+  background-size: 8px 2px;
+  background-repeat: repeat-x;
+  margin: 0 4px;
+}
