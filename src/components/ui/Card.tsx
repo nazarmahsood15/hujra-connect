@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { HTMLAttributes } from "react";
 
 export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("card-hujra p-5", className)} {...props} />;
+  return <div className={cn("card-hujra p-5 shadow-[0_8px_30px_rgba(21,55,47,0.05)] transition-shadow duration-200 hover:shadow-[0_12px_36px_rgba(21,55,47,0.09)]", className)} {...props} />;
 }
 
 export function Badge({
