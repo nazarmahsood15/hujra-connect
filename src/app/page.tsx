@@ -67,7 +67,7 @@ export default function LandingPage() {
               <span>Pakistan’s First Elder-Vouched Service Network</span>
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl text-[#201a14] dark:text-[#f1ead9] leading-[1.15] tracking-tight">
+            <h1 className="min-w-0 max-w-full break-words font-display text-3xl sm:text-5xl lg:text-6xl text-[#201a14] dark:text-[#f1ead9] leading-[1.15] tracking-tight">
               Find Trusted Local Workers <br />
               <span className="text-[#0f4c4c] dark:text-[#2c8b84]">Vouched by Elders</span> & Imams.
             </h1>

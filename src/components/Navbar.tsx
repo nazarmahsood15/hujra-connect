@@ -41,7 +41,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-[#fffbf3]/95 dark:bg-[#11201d]/95 backdrop-blur border-b border-[#e4d5b8] dark:border-[#2c433d] transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 min-h-[4.5rem] flex items-center justify-between gap-3">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3 shrink-0 group">
           <ConnectaLogo size="md" className="group-hover:scale-105" />
@@ -162,7 +162,7 @@ export function Navbar() {
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-[#e4d5b8] dark:border-[#2c433d] bg-[#fffbf3] dark:bg-[#11201d] px-4 py-4 space-y-2">
+        <div className="lg:hidden border-t border-[#e4d5b8] dark:border-[#2c433d] bg-[#fffbf3] dark:bg-[#11201d] px-4 py-4 flex flex-col gap-2 shadow-lg">
           {navLinks.map((link) => {
             const Icon = link.icon;
             return (

@@ -3,44 +3,66 @@
 @tailwind utilities;
 
 :root {
-  --bg: #f6efe2;
-  --bg-soft: #efe4cf;
-  --card: #fffbf3;
-  --ink: #201a14;
-  --ink-soft: #6b5f4f;
-  --teal: #0f4c4c;
-  --teal-2: #17706b;
-  --marigold: #e8a23d;
-  --marigold-2: #c97f1e;
-  --maroon: #a63a2e;
-  --brass: #c9a227;
-  --border: #e4d5b8;
+  --bg: #f4f6f3;
+  --bg-soft: #e7eeea;
+  --card: #ffffff;
+  --ink: #17211f;
+  --ink-soft: #60706b;
+  --teal: #0d5c57;
+  --teal-2: #16847a;
+  --marigold: #e5ad45;
+  --marigold-2: #bd7d20;
+  --maroon: #a94c42;
+  --brass: #d5aa4a;
+  --border: #d9e3de;
 }
 
 .dark {
-  --bg: #11201d;
-  --bg-soft: #172a26;
-  --card: #1c2e2a;
-  --ink: #f1ead9;
-  --ink-soft: #afa491;
-  --teal: #173e3e;
-  --teal-2: #2c8b84;
-  --marigold: #e8a23d;
-  --marigold-2: #f0b25c;
-  --maroon: #c24e3e;
-  --brass: #d8b33b;
-  --border: #2c433d;
+  --bg: #0d1918;
+  --bg-soft: #142522;
+  --card: #172c29;
+  --ink: #edf5f0;
+  --ink-soft: #a4b7af;
+  --teal: #1b655f;
+  --teal-2: #45b3a7;
+  --marigold: #e6b557;
+  --marigold-2: #f1c875;
+  --maroon: #d16b5d;
+  --brass: #d9b65c;
+  --border: #29443e;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--bg);
   color: var(--ink);
+  font-feature-settings: "ss01" 1, "cv11" 1;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--marigold) 45%, transparent);
+  color: var(--ink);
+}
+
+input, select, textarea, button {
+  font: inherit;
+}
+
+button, a, select {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .card-hujra {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 20px;
   position: relative;
   overflow: hidden;
 }
@@ -48,17 +70,10 @@ body {
 .card-hujra::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--marigold) 0 10px,
-    var(--maroon) 10px 20px,
-    var(--teal-2) 20px 30px
-  );
-  opacity: 0.55;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--marigold), var(--teal-2));
+  opacity: 0.8;
 }
 
 .vouch-line {
